@@ -2,6 +2,7 @@ import express from 'express'
 import dotenv from 'dotenv'
 import cookieParser from 'cookie-parser'
 import cors, { CorsOptionsDelegate, CorsRequest } from 'cors'
+import { PrismaClient } from '@prisma/client'
 dotenv.config()
 
 
@@ -30,7 +31,7 @@ app.use(cors(corsOptionDelegate))
 app.get("/", (req, res) => {
     res.send("This Is An AI Project")
 })
-
+export const db = new PrismaClient()
 app.listen(Port,() => {
     console.log(`Your Sever is running on http://localhost:${Port}`)
 })
