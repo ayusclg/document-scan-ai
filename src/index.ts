@@ -8,6 +8,8 @@ import authRoutes from "./User/userRoute";
 import passport from "passport";
 
 import "./User/passport";
+import morgan from "morgan";
+import { logger } from "./Logger";
 dotenv.config();
 
 const app = express();
@@ -34,7 +36,13 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(cors(corsOptionDelegate));
-
+app.use(
+  morgan("combined", {
+    stream: {
+      write: (message) => logger.http(message.trim()),
+    },
+  })
+);
 app.get("/", (req, res) => {
   res.send("This Is An AI Project");
 });
