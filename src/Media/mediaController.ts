@@ -91,4 +91,34 @@ const summariseFile = asyncHandler(
     res.status(200).json(new apiResponse(200, "Summary Generated", summary));
   }
 );
-export { uploadFile, summariseFile };
+
+const QandA = asyncHandler(
+  async (req: Request, res: Response): Promise<void> => {
+    const { question } = req.body;
+    const fileId = req.params.id;
+    const checkFile = await db.file.findUnique({
+      where: {
+        id: fileId,
+      },
+    });
+    if (!checkFile) {
+      throw new apiError(404, "No Files Found");
+    }
+    const response = await client.models.generateContent({
+      model: "gemini-2.5-flash",
+      contents: [
+        {
+          role: "user",
+          parts: [
+            {
+              text: `anser this ${question} for this texts ${checkFile.extractedText} i want the answer to be proper within from this texts i have provided and if external is added give me the proper source from where it is added  `,
+            },
+          ],
+        },
+      ],
+    });
+        const answer = response.text
+        res.status(200).json(new apiResponse(200,"Question Answered Successfully",answer))
+  }
+);
+export { uploadFile, summariseFile,QandA };
