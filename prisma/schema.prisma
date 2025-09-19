@@ -15,4 +15,19 @@ model User {
   fullname  String
   email String @unique
   profilePicture String 
+  createdAt DateTime @default(now())
+  files File[]
 }
+
+
+model File{
+  id String @id @default(uuid())
+  fileName String
+  url String
+  extractedText String
+  userId String
+  user User @relation(fields: [userId],references: [id])
+  uploadedAt DateTime @default(now())
+
+}
+
