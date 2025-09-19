@@ -12,8 +12,8 @@ export const googleCallback = async (
     if (!user) {
       throw new apiError(401, "Please Login");
     }
-    const refreshToken = generateRefreshToken(user);
-    const accessToken = generateAccessToken(user);
+    const refreshToken = await generateRefreshToken(user);
+    const accessToken = await generateAccessToken(user);
 
     res.cookie("accessToken", accessToken, {
       httpOnly: true,

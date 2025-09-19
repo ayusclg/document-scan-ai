@@ -14,7 +14,7 @@ export const generateAccessToken = async (user: User) => {
     },
     accessSecret,
     {
-      expiresIn: Number(process.env.ACCESS_TOKEN_EXPIRY) || "15",
+      expiresIn: Number(process.env.ACCESS_TOKEN_EXPIRY) || "1hr",
     }
   );
 };
