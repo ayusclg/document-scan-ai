@@ -18,7 +18,10 @@ const corsOptionDelegate: CorsOptionsDelegate = (
   req: CorsRequest,
   callback
 ) => {
-  const allowedOrigin = ["http://localhost:5173"];
+  const allowedOrigin = [
+    "http://localhost:5173",
+    "https://document-scan-ai-frontend.vercel.app/",
+  ];
   const origin = req.headers.origin;
   if (!origin || allowedOrigin.includes(origin)) {
     callback(null, {
