@@ -7,6 +7,6 @@ const router = express.Router();
 
 router.post("/upload", Upload.single("file"), verifyUser, uploadFile);
 router.get("/summary/:id", verifyUser, summariseFile);
-router.get("/q&a/:id", verifyUser, QandA);
+router.get("/qa/:id", verifyUser, QandA);
 router.get("/myFiles",verifyUser,myFiles)
 export default router;
