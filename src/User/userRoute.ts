@@ -1,6 +1,8 @@
 import express from "express";
 import passport from "passport";
 import { googleCallback } from "./googleCallback";
+import { verifyUser } from "../Middlewares/auth";
+import { myProfile } from "./UserController";
 
 const router = express.Router();
 
@@ -16,5 +18,7 @@ router.get(
   }),
   googleCallback
 );
+
+router.get("/my",verifyUser,myProfile)
 
 export default router;
