@@ -15,16 +15,26 @@ export const googleCallback = async (
     const refreshToken = await generateRefreshToken(user);
     const accessToken = await generateAccessToken(user);
 
-    res.cookie("accessToken", accessToken, {
-      httpOnly: true,
-      secure: false,
-    });
-    res.cookie("refreshToken", refreshToken, {
-      httpOnly: true,
-      secure: false,
-    });
-    res.redirect(
-      `http://localhost:5173/oauth-success?accessToken=${accessToken}&refreshToken=${refreshToken}`
-    );
-  } catch (error) {}
+ 
+      res.cookie("accessToken", accessToken, {
+        httpOnly: true,
+        secure: true,
+        path: "/",
+        sameSite: "none",
+      });
+
+      res.cookie("refreshToken", refreshToken, {
+        httpOnly: true,
+        secure: true,
+        sameSite: "none",
+        path: "/",
+      });
+
+      res.redirect(
+        `http://localhost:5173/oauth-success?accessToken=${accessToken}&refreshToken=${refreshToken}`
+      );
+  } catch (error) { 
+    throw new apiError(400,"Error In Google Callback")
+  }
+  
 };
