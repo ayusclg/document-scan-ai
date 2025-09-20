@@ -40,7 +40,8 @@ export const storeFile = async(file : Express.Multer.File)=> {
   const dataUri = `data:${file.mimetype};base64,${b64}`
 try {
   
-    const cloudinaryRes = await cloudinary.v2.uploader.upload(dataUri, {
+  const cloudinaryRes = await cloudinary.v2.uploader.upload(dataUri, {
+      resource_type:"raw",
       folder:"DOCUMENT-SCAN-AI"
     })
     return cloudinaryRes.secure_url;
