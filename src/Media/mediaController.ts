@@ -7,6 +7,7 @@ import { db } from "..";
 import path from "path";
 import { GoogleGenAI } from "@google/genai";
 import { text } from "stream/consumers";
+import { storeFile } from "../Middlewares/upload";
 
 const client = new GoogleGenAI({
   apiKey: process.env.GEMINI_API_KEY as string,
@@ -31,11 +32,12 @@ const uploadFile = asyncHandler(
         extractedText += text + "\n";
       }
     }
-    fs.unlinkSync(tempPath);
+        fs.unlinkSync(tempPath);
+        const cloudUpload = await storeFile(req.file)
     const saveFileInDb = await db.file.create({
       data: {
         fileName: req.file.originalname as string,
-        url: "xyz" as string,
+        url: cloudUpload,
         userId: req.userId,
         extractedText,
       },
