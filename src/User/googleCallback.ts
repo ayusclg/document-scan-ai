@@ -31,7 +31,7 @@ export const googleCallback = async (
       });
 
       res.redirect(
-        `http://localhost:5173/oauth-success?accessToken=${accessToken}&refreshToken=${refreshToken}`
+        `https://document-scan-ai-frontend.vercel.app/oauth-success?accessToken=${accessToken}&refreshToken=${refreshToken}`
       );
   } catch (error) { 
     throw new apiError(400,"Error In Google Callback")
