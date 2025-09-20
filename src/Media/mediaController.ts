@@ -121,4 +121,16 @@ const QandA = asyncHandler(
         res.status(200).json(new apiResponse(200,"Question Answered Successfully",answer))
   }
 );
-export { uploadFile, summariseFile,QandA };
+
+const myFiles = asyncHandler(async (req: Request, res: Response): Promise<void> => {
+    const files = await db.file.findMany({
+        where: {
+            userId:req.userId
+        }
+    })
+    if (!files) {
+        throw new apiError(404,"No Files Found")
+    }
+    res.status(200).json(new apiResponse(200,"Files Fetched",files))
+})
+export { uploadFile, summariseFile,QandA ,myFiles};
